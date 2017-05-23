@@ -31,7 +31,7 @@ final class FilesystemUsers implements Users
         return unserialize(file_get_contents($this->path . '/' . $emailAddress));
     }
 
-    public function add(User $user): void
+    public function store(User $user): void
     {
         $id = $user->id();
 

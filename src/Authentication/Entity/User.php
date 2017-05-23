@@ -16,6 +16,11 @@ class User
      */
     private $passwordHash;
 
+    /**
+     * @var LoginAttempt|null
+     */
+    private $lastLogin;
+
     private function __construct(string $email, string $passwordHash)
     {
         $this->email = $email;
@@ -43,6 +48,18 @@ class User
         }
 
         return new self($email, $hashingMechanism($password));
+    }
+
+    public function authenticate(
+        string $password,
+        callable $passwordVerification,
+        \DateTime $currentTime
+    ) : bool {
+        $success = $passwordVerification($password, $this->passwordHash);
+
+        $this->lastLogin = LoginAttempt::fromLogin($this, $currentTime, true);
+
+        return $success;
     }
 
     public function id() : string
