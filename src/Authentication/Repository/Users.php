@@ -11,8 +11,5 @@ interface Users
      */
     public function get(string $emailAddress) : User;
 
-    /**
-     * @throws \InvalidArgumentException
-     */
     public function store(User $user) : void;
 }
