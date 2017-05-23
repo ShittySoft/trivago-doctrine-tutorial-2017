@@ -2,6 +2,8 @@
 
 namespace Authentication\Entity;
 
+use Authentication\Validator\UserExists;
+
 class User
 {
     /**
@@ -23,11 +25,19 @@ class User
     public static function register(
         string $email,
         string $password,
-        callable $hashingMechanism
+        callable $hashingMechanism,
+        UserExists $userExists
     ) : self {
         if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new \InvalidArgumentException(sprintf(
                 'Invalid email "%s" provided',
+                $email
+            ));
+        }
+
+        if ($userExists->__invoke($email)) {
+            throw new \InvalidArgumentException(sprintf(
+                'User with email "%s" is already registered',
                 $email
             ));
         }
