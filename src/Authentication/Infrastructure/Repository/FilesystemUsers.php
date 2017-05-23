@@ -21,7 +21,14 @@ final class FilesystemUsers implements Users
 
     public function get(string $emailAddress): User
     {
-        throw new \BadMethodCallException();
+        if (! file_exists($this->path . '/' . $emailAddress)) {
+            throw new \UnexpectedValueException(sprintf(
+                'User "%s" does not exist',
+                $emailAddress
+            ));
+        }
+
+        return unserialize(file_get_contents($this->path . '/' . $emailAddress));
     }
 
     public function add(User $user): void
