@@ -24,3 +24,5 @@ $users->add(User::register(
     },
     $validator
 ));
+
+echo 'Registered successfully!';
