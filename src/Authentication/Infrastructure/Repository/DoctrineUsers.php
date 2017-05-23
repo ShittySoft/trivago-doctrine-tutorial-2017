@@ -40,7 +40,7 @@ final class DoctrineUsers implements Users
         return $object;
     }
 
-    public function add(User $user): void
+    public function store(User $user): void
     {
         $this->objectManager->persist($user);
         $this->objectManager->flush();

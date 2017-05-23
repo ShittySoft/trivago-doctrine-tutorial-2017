@@ -19,7 +19,7 @@ if ($validator->__invoke($_POST['emailAddress'])) {
     return;
 }
 
-$users->add(User::register(
+$users->store(User::register(
     $_POST['emailAddress'],
     $_POST['password'],
     function (string $password) : string {

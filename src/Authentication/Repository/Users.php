@@ -14,5 +14,5 @@ interface Users
     /**
      * @throws \InvalidArgumentException
      */
-    public function add(User $user) : void;
+    public function store(User $user) : void;
 }
