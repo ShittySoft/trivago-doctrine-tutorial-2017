@@ -1,12 +1,15 @@
 <?php
 
 use Authentication\Entity\User;
+use Authentication\Infrastructure\Repository\DoctrineUsers;
 use Authentication\Infrastructure\Repository\FilesystemUsers;
 use Authentication\Infrastructure\Validator\UserExistsInRepository;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$users = new FilesystemUsers(__DIR__ . '/../data/users');
+/* @var $entityManager \Doctrine\ORM\EntityManagerInterface */
+$entityManager = require __DIR__ . '/../bootstrap.php';
+$users = new DoctrineUsers($entityManager->getRepository(User::class), $entityManager);
 
 $validator = new UserExistsInRepository($users);
 
